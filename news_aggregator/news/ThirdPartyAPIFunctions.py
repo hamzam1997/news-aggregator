@@ -39,4 +39,4 @@ def getPostsFromReddit(query = None):
     return cleanedPosts
 
 def getPosts(query = None):
-    return getPostsFromNewsAPI() + getPostsFromReddit()
+    return getPostsFromNewsAPI(query) + getPostsFromReddit(query)

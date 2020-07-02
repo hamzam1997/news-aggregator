@@ -6,5 +6,5 @@ from .ThirdPartyAPIFunctions import getPosts
 
 def getNews(request):
     query = request.GET.get('query')
-    response = getPosts()
+    response = getPosts(query)
     return JsonResponse(response, safe = False)
