@@ -2,11 +2,14 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils.timezone import make_aware
 from django.http import JsonResponse
+from django.conf import settings
 
 from news.models import Query, QueryResult
 
 import datetime
 import pytz
+
+REFRESH_HOURS = settings.REFRESH_HOURS
 
 class TestViews(TestCase):
 
@@ -38,7 +41,7 @@ class TestViews(TestCase):
         self.assertEquals(old_timestamp, new_timestamp)
     
     def test_query_update_timestamp(self):
-        old_timestamp = make_aware(datetime.datetime.now() - datetime.timedelta(hours = 1))
+        old_timestamp = make_aware(datetime.datetime.now() - datetime.timedelta(hours = REFRESH_HOURS))
         Query.objects.create(query = None, queriedAt = old_timestamp)
         response = self.client.get(self.getNews_url)
         new_timestamp = Query.objects.get(query = None).queriedAt
@@ -58,7 +61,7 @@ class TestViews(TestCase):
         self.assertEquals(queryResult, newQueryResult)
 
     def test_queryResult_update(self):
-        old_timestamp = make_aware(datetime.datetime.now() - datetime.timedelta(hours = 1))
+        old_timestamp = make_aware(datetime.datetime.now() - datetime.timedelta(hours = REFRESH_HOURS))
         queryResult = QueryResult.objects.create(
             headline = "test",
             link = "test.com",

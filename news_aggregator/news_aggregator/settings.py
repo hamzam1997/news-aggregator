@@ -119,3 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Constants
+REFRESH_HOURS = 1 # Number of hours to mark a query as expired
