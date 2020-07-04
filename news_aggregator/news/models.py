@@ -11,6 +11,10 @@ class QueryResult(models.Model):
     source = models.CharField(max_length = 30)
 
     def as_dict(self):
+        """
+        :return: Returns the model object as a dictionary with each attribute as a key.
+        :rtype: dict
+        """
         return {
             "headline": self.headline,
             "link": self.link,
