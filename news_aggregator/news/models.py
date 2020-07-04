@@ -10,6 +10,13 @@ class QueryResult(models.Model):
     link = models.URLField()
     source = models.CharField(max_length = 30)
 
+    def as_dict(self):
+        return {
+            "headline": self.headline,
+            "link": self.link,
+            "source": self.source
+        }
+
 class Query(models.Model):
     query = models.CharField(max_length = 100, null = True, blank = True)
     queriedAt = models.DateTimeField(default = make_aware(datetime.datetime.now()))

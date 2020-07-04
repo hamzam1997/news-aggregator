@@ -63,11 +63,5 @@ def getNews(request):
         print("Fetching results for new query")
         updateResults(obj, query)
 
-    response = []
-    for post in obj.results.all():
-        response.append({   "headline": post.headline,
-                            "link": post.link,
-                            "source": post.source
-                        })
-
+    response = [post.as_dict() for post in obj.results.all()] 
     return JsonResponse(response, safe = False)
