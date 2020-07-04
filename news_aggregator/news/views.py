@@ -13,6 +13,18 @@ import datetime
 REFRESH_HOURS = settings.REFRESH_HOURS
 
 def updateResults(queryObject, query):
+    """Updates the results by fetching the queries from APIs
+
+    Retrieves the posts from the APIs based on the query from the user. 
+    Creates a models.QueryResult object for every post and attaches with the
+    models.Query object passed in the parameter
+
+    :param queryObject: The object to which the fetched results have to be attached
+    :type queryObject: models.Query
+    :param query: The query to fetch the results for
+    :type query: str
+    """
+
     queryObject.results.all().delete()
     posts = getPosts(query)
     for post in posts:
@@ -22,7 +34,18 @@ def updateResults(queryObject, query):
                                         )
         queryObject.results.add(queryResult)
 
+
 def getNews(request):
+    """View method mapped on the url.
+
+    It handles the request and responds accordingly by by checking the
+    expiry time of the query if query has been sent before, and also for the new query.
+
+    :param request: The request made from the client side
+    :type request: django.http.HttpRequest
+    :return: A response in json format containing the list of all results
+    :rtype: django.http.JsonResponse
+    """
     query = request.GET.get('query')
     obj, created = Query.objects.get_or_create(
         query = query
