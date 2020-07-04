@@ -48,7 +48,7 @@ def getPostsFromRedditAPI(query = None):
     try:
         posts = None
         if query in [None, ""]:
-            posts = reddit.subreddit('news').hot(limit = 100)
+            posts = reddit.subreddit('news').hot()
         else:
             posts = reddit.subreddit('news').search(query)
 
