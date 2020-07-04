@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.utils.timezone import make_aware
-from django.core import serializers
 
 from .ThirdPartyAPIFunctions import getPosts
 from .models import Query, QueryResult
@@ -9,6 +8,7 @@ from .models import Query, QueryResult
 import datetime
 # Create your views here.
 def updateResults(queryObject, query):
+    queryObject.results.all().delete()
     posts = getPosts(query)
     for post in posts:
         queryResult, created = QueryResult.objects.get_or_create(   headline = post["headline"],
@@ -26,7 +26,7 @@ def getNews(request):
         currentTime = make_aware(datetime.datetime.now())
         difference = currentTime - obj.queriedAt
 
-        if (difference.seconds/60) > 60:
+        if (difference.seconds/60) > 59:
             Query.objects.filter(query = query).update(queriedAt = currentTime)
             print("Fetching new results for query")
             updateResults(obj, query)
