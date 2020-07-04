@@ -6,11 +6,11 @@ The application fetches results if the query is not requested before. If it is r
 ## Getting Started
 ### Installation
 To install all the requirements run the following command  
-`pip install requirements.txt`
+```pip install -r requirements.txt```
 
 ### Starting the application
 To start the application, go to folder [news_aggregator](news_aggregator) and run the following command  
-`python manage.py runserver`
+```python manage.py runserver```
 
 ## Usage
 Make sure your computer is connected to the internet. After starting the application make request using an application/browser to the url  
