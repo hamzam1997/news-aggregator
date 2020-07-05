@@ -53,15 +53,12 @@ def getNews(request):
     if not created:
         currentTime = make_aware(datetime.datetime.now())
         difference = currentTime - obj.queriedAt
-
         if (difference.seconds/60) > (REFRESH_HOURS * 60) - 1:
             Query.objects.filter(query = query).update(queriedAt = currentTime)
             print("Fetching new results for query")
             updateResults(obj, query)
-
     else:
         print("Fetching results for new query")
         updateResults(obj, query)
-
     response = [post.as_dict() for post in obj.results.all()] 
     return JsonResponse(response, safe = False)
